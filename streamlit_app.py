@@ -18,6 +18,13 @@ def get_fruit_load_list():
     return my_cur.fetchall()
 
 
+def insert_row_snowflake(new_fruit):
+  with my_cnx.cursor() as my_cur:
+    my_cur.execute(f"insert into pc_rivery_db.public.fruit_load_list values ({new_fruit})")
+    msg = "Thanks for adding " + new_fruit
+    return msg
+
+
 streamlit.title("My mom's New Healthy Diner")
 
 streamlit.header("Breakfast Favorites")
@@ -64,6 +71,5 @@ streamlit.stop()
 
 add_my_fruit = streamlit.text_input("What fruit would you like to add?", "jackfruit")
 streamlit.write("Thanks for adding", add_my_fruit)
+msg = insert_row_snowflake()
 
-# This will not work correctly, but just go with it for now
-my_cur.execute("insert into pc_rivery_db.public.fruit_load_list values ('from streamlit')")
